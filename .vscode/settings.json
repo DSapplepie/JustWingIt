@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Just Wing It.sln"
+    "dotnet.defaultSolution": "JustWingIt.sln"
 }
