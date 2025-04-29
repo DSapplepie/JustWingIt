@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
 	private int _numberOfJumps;
 	[SerializeField] private int maxNumberOfJumps = 2;
 
+	[SerializeField] private float glideFallSpeed = -2f;
+	private bool _wantsToGlide;
+
 	#endregion
 	
 	private void Awake()
@@ -57,7 +60,10 @@ public class PlayerController : MonoBehaviour
 		{
 			_velocity = -1.0f;
 		}
-		else
+		else if(_wantsToGlide)
+		{
+			_velocity += glideFallSpeed * Time.deltaTime;
+		} else
 		{
 			_velocity += _gravity * gravityMultiplier * Time.deltaTime;
 		}
@@ -92,11 +98,19 @@ public class PlayerController : MonoBehaviour
 	public void Jump(InputAction.CallbackContext context)
 	{
 		if (!context.started) return;
-		if (!IsGrounded() && _numberOfJumps >= maxNumberOfJumps) return;
-		if (_numberOfJumps == 0) StartCoroutine(WaitForLanding());
+		if (!IsGrounded() && _numberOfJumps >= maxNumberOfJumps)	//if double jump has been used
+		{
+			Debug.Log("Glide");
+			_wantsToGlide = true;
+			return;
+		} else 
+		{ 
+			if (_numberOfJumps == 0) StartCoroutine(WaitForLanding());
 		
-		_numberOfJumps++;
-		_velocity = jumpPower;
+			_numberOfJumps++;
+			_velocity = jumpPower;
+			_wantsToGlide = false;
+		}
 	}
 
 	public void Sprint(InputAction.CallbackContext context)
