@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float speed;
 
 	[SerializeField] private Movement movement;
-
+	[SerializeField] private float coyoteTime = 0.5f;  // how long after leaving ground you can still first jump
+	private float _lastGroundedTime;     // stores the last Time.time we were grounded
 	#endregion
 	#region Variables: Rotation
 
@@ -31,7 +32,10 @@ public class PlayerController : MonoBehaviour
 
 	#endregion
 	#region Variables: Jumping
-
+	
+	[SerializeField] 
+	private float _lastJumpPressed;
+	
 	[SerializeField] private float jumpPower;
 	private int _numberOfJumps;
 	[SerializeField] private int maxNumberOfJumps = 2;
@@ -48,13 +52,21 @@ public class PlayerController : MonoBehaviour
 	{
 		_characterController = GetComponent<CharacterController>();
 		_mainCamera = Camera.main;
+		_lastGroundedTime = Time.time;
 	}
 
 	private void Update()
 	{
+
 		ApplyRotation();
 		ApplyGravity();
 		ApplyMovement();
+
+		if (IsGrounded())
+		{
+			_lastGroundedTime = Time.time;  // reset our coyote clock
+			_numberOfJumps = 0;          // normal jump‐reset
+		}
 	}
 
 	private void ApplyGravity()
@@ -130,13 +142,24 @@ public class PlayerController : MonoBehaviour
 	
 	public void Jump(InputAction.CallbackContext context)
 	{
-		if (!context.started) return;
-		if (!IsGrounded() && _numberOfJumps >= maxNumberOfJumps) return;
-		if (_numberOfJumps == 0) StartCoroutine(WaitForLanding());
-		
-		_numberOfJumps++;
-		_velocity = jumpPower;
+    	if (!context.started) return;
+		//first jump within coyote time
+    	bool canFirstJump = _numberOfJumps == 0
+                      && (Time.time - _lastGroundedTime <= coyoteTime);
+
+    	// double jump only if we done at least one jump
+    	bool canDoubleJump = _numberOfJumps > 0
+                      && _numberOfJumps < maxNumberOfJumps;
+
+    	// if neither case applies, bail out
+    	if (!canFirstJump && !canDoubleJump) 
+        	return;
+
+    	// otherwise do the jump
+    	_numberOfJumps++;
+    	_velocity = jumpPower;
 	}
+
 
 	public void Sprint(InputAction.CallbackContext context)
 	{
@@ -147,7 +170,6 @@ public class PlayerController : MonoBehaviour
 	{
 		yield return new WaitUntil(() => !IsGrounded());
 		yield return new WaitUntil(IsGrounded);
-
 		_numberOfJumps = 0;
 	}
 
