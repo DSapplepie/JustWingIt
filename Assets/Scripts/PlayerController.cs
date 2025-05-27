@@ -128,10 +128,10 @@ public class PlayerController : MonoBehaviour
     	_characterController.Move(finalMoveVector * Time.deltaTime);
 	}
 
-	public void Glide(InputAction.CallbackContext ctx)
+	public void Glide(InputAction.CallbackContext context)
 	{
-    	if (ctx.started)      _isGliding = true;
-    	else if (ctx.canceled) _isGliding = false;
+    	if (context.started)      _isGliding = true;
+    	else if (context.canceled) _isGliding = false;
 	}
 
 	public void Move(InputAction.CallbackContext context)
