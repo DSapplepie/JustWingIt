@@ -1900,8 +1900,10 @@ MonoBehaviour:
     acceleration: 100
     isSprinting: 0
     currentSpeed: 0
+  coyoteTime: 0.2
   rotationSpeed: 750
   gravityMultiplier: 6
+  _lastJumpPressed: 0
   jumpPower: 25
   maxNumberOfJumps: 2
   glideGravityMultiplier: 0.5
