@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
 	#endregion
 	#region Variables: Gravity
 
-	private float _gravity = -9.81f;
+	// low gravity mode right now - usually -9.81f
+	private float _gravity = -.5f;
 	[SerializeField] private float gravityMultiplier = 3.0f;
 	private float _velocity;
 
@@ -160,10 +161,15 @@ public class PlayerController : MonoBehaviour
     	_velocity = jumpPower;
 	}
 
-
 	public void Sprint(InputAction.CallbackContext context)
 	{
 		movement.isSprinting = context.started || context.performed;
+	}
+
+	public void Respawn()
+	{
+		Vector3 respawnPosition = CheckpointManager.Instance.GetLastCheckpointPosition();
+		transform.position = respawnPosition;
 	}
 
 	private IEnumerator WaitForLanding()
