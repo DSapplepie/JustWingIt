@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 	#region Variables: Gravity
 
 	// low gravity mode right now - usually -9.81f
-	private float _gravity = -.5f;
+	private float _gravity = -9.81f;
 	[SerializeField] private float gravityMultiplier = 3.0f;
 	private float _velocity;
 
