@@ -48,19 +48,7 @@ public class PlayerController : MonoBehaviour
 	private bool _isGliding;
 
 	#endregion
-	//
-	private IEnumerator TeleportToPosition(Vector3 targetPosition)
-	{
-		// Disable CharacterController to allow instant repositioning
-		_characterController.enabled = false;
-		transform.position = targetPosition;
-
-		// Wait one frame before re-enabling to avoid physics issues
-		yield return null;
-
-		_characterController.enabled = true;
-	}
-	//
+	
 	private void Awake()
 	{
 		_characterController = GetComponent<CharacterController>();
@@ -80,9 +68,6 @@ public class PlayerController : MonoBehaviour
 			_lastGroundedTime = Time.time;  // reset our coyote clock
 			_numberOfJumps = 0;          // normal jump‐reset
 		}
-		if (Input.GetKeyDown(KeyCode.J)){
-			 StartCoroutine(TeleportToPosition(new Vector3(270f, 2f, 255f)));
-        }
 	}
 
 	private void ApplyGravity()
@@ -196,8 +181,6 @@ public class PlayerController : MonoBehaviour
 
 	private bool IsGrounded() => _characterController.isGrounded;
 }
-
-
 
 [Serializable]
 public struct Movement
