@@ -22,31 +22,56 @@ public class IntroScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI previousBindingText;
     [SerializeField] private TextMeshProUGUI nextBindingText;
 
+    [Header("Welcome Screen UI Elements")]
+    [SerializeField] private GameObject welcomePanel;
+    [SerializeField] private Button welcomeContinueButton;
+
     private void Start()
     {
-        // Initialize the intro screen
-        ShowIntroScreen();
+        // Show the welcome screen first
+        ShowWelcomeScreen();
 
-        // Add listener to continue button
+        // Add listener to welcome continue button
+        if (welcomeContinueButton != null)
+            welcomeContinueButton.onClick.AddListener(OnWelcomeContinue);
+
+        // Add listener to intro continue button
         if (continueButton != null)
             continueButton.onClick.AddListener(HideIntroScreen);
+    }
+
+    private void ShowWelcomeScreen()
+    {
+        Time.timeScale = 0; // Pause the game
+        if (welcomePanel != null)
+            welcomePanel.SetActive(true);
+        if (introPanel != null)
+            introPanel.SetActive(false);
+    }
+
+    private void OnWelcomeContinue()
+    {
+        if (welcomePanel != null)
+            welcomePanel.SetActive(false);
+        ShowIntroScreen();
     }
 
     private void ShowIntroScreen()
     {
         // Populate key binding information
-        moveBindingText.text = "WASD / Arrow Keys";
-        jumpBindingText.text = "Space";
-        glideBindingText.text = "Hold Space (while in air)";
-        sprintBindingText.text = "Left Shift";
-        attackBindingText.text = "Mouse Left Button / Enter";
-        interactBindingText.text = "E";
-        crouchBindingText.text = "C";
-        previousBindingText.text = "1 / D-pad Left";
-        nextBindingText.text = "2 / D-pad Right";
+        moveBindingText.text = "Move - WASD / Arrow Keys";
+        jumpBindingText.text = "Jump - Space";
+        glideBindingText.text = "Glide - Hold Space (while in air)";
+        sprintBindingText.text = "Sprint - Left Shift";
+        attackBindingText.text = "Attack - Mouse Left Button / Enter";
+        interactBindingText.text = "Interact - E";
+        crouchBindingText.text = "Crouch - C";
+        previousBindingText.text = "Prev. - 1 / D-pad Left";
+        nextBindingText.text = "Next - 2 / D-pad Right";
 
         Time.timeScale = 0; // Pause the game
-        introPanel.SetActive(true);
+        if (introPanel != null)
+            introPanel.SetActive(true);
     }
 
     private void HideIntroScreen()
