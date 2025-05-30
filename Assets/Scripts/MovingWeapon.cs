@@ -8,19 +8,16 @@ using UnityEngine;
 
 public class MovingWeapon : MonoBehaviour
 {
-    //pointA & pointB will be the 2 cube objects that will act as the points in which the platform will travel between.
     [SerializeField] GameObject pointA;
     [SerializeField] GameObject pointB;
-    //default speed for how fast the platforms move & default delay for how long the platforms stop as they hit the points before moving again
     [SerializeField] float speed = 10f;
     [SerializeField] float delay = 1f;
-    // Just the platform gameobject
     [SerializeField] GameObject platform;
-    // the target position the platform is currently moving to
     private Vector3 targetPosition;
     [SerializeField] float rotationSpeed = 10f;
 
-    // sets initial position of the platform (pointA), initial targetposition (pointB), and calls the coroutine/function MovePlatform
+    // The necessary funnctionality & code is the same as the MovingPlatform script but with the additional code to rotate the weapon.
+
     void Start()
     {
         platform.transform.position = pointA.transform.position;

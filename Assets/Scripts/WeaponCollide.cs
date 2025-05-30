@@ -4,9 +4,8 @@ public class WeaponCollide : MonoBehaviour
 {
     // A tag to identify the player
     [SerializeField] string playerTag = "Player";
-    // Platform the player should be able to stand on
 
-    // If the collision is caused by a other.gameObject that has the player tag then set the player's parent to the platform so they move with it.
+    // If the collision is caused by a other.gameObject that has the player tag then reset the player to the last known checkpoint
     private void OnTriggerEnter(Collider other){
         if(other.CompareTag(playerTag)){
             //get the last saved checkpoint position from checkpoint manager
