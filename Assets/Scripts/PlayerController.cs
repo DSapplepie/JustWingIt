@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
 		movement.isSprinting = context.started || context.performed;
 	}
 
+	//respawn player at last checkpoint position
 	public void Respawn()
 	{
 		Vector3 respawnPosition = CheckpointManager.Instance.GetLastCheckpointPosition();
