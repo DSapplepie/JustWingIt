@@ -68,6 +68,17 @@ public class PlayerController : MonoBehaviour
 			_lastGroundedTime = Time.time;  // reset our coyote clock
 			_numberOfJumps = 0;          // normal jump‐reset
 		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			Vector3 checkpointPosition = CheckpointManager.Instance.GetLastCheckpointPosition();
+			transform.position = checkpointPosition;
+		}
+		Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero; // Reset velocity
+                rb.angularVelocity = Vector3.zero; // Reset angular velocity
+            }
 	}
 
 	private void ApplyGravity()
