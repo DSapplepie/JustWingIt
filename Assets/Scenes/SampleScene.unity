@@ -10909,11 +10909,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farm Hen
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: fefd0fed49653e641b702f07b557f95a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: baa0fb4d78c55e648a5d50eb76df773d, type: 2}
+    - target: {fileID: 5866666021909216657, guid: fefd0fed49653e641b702f07b557f95a, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fefd0fed49653e641b702f07b557f95a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 494986067}
   m_SourcePrefab: {fileID: 100100000, guid: fefd0fed49653e641b702f07b557f95a, type: 3}
+--- !u!1 &468168173 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fefd0fed49653e641b702f07b557f95a, type: 3}
+  m_PrefabInstance: {fileID: 468168172}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &470241355
 GameObject:
   m_ObjectHideFlags: 0
@@ -11396,6 +11412,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fefd0fed49653e641b702f07b557f95a, type: 3}
   m_PrefabInstance: {fileID: 468168172}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &494986067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468168173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ee7b02ce92bf14793832030f1a072a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &499419978
 PrefabInstance:
   m_ObjectHideFlags: 0
