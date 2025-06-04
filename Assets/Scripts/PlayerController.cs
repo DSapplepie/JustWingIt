@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 	#endregion
 	#region Variables: Audio
 	public AudioSource audioSource;
+	public AudioSource jumpSoundSource;
 	public AudioClip jumpSound;
 	public AudioClip glideSound;
 	public AudioClip landSound;
@@ -178,24 +179,20 @@ public class PlayerController : MonoBehaviour
     	if (context.started)
 		{
 			_isGliding = true;
-			Debug.Log("Gliding started");
 
 			if (!audioSource.isPlaying)
 			{
 				audioSource.clip = glideSound;
 				audioSource.Play();
-				Debug.Log("Gliding sound playing");
 			}
 		}
 		else if (context.canceled)
 		{
 			_isGliding = false;
-			Debug.Log("Gliding stopped");
 
 			if (audioSource.isPlaying && audioSource.clip == glideSound)
 			{
 				audioSource.Stop();
-				Debug.Log("Gliding sound stopped");
 			}
 		}
 	}
@@ -224,8 +221,7 @@ public class PlayerController : MonoBehaviour
 		// otherwise do the jumpf
 		_numberOfJumps++;
 		_velocity = jumpPower;
-		audioSource.PlayOneShot(jumpSound);
-
+		jumpSoundSource.PlayOneShot(jumpSound);
 		// Stop sprint sound when jumping
 		if (isSprintSoundPlaying)
 		{
