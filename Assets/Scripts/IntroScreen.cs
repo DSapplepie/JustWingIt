@@ -16,11 +16,11 @@ public class IntroScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI jumpBindingText;
     [SerializeField] private TextMeshProUGUI glideBindingText;
     [SerializeField] private TextMeshProUGUI sprintBindingText;
-    [SerializeField] private TextMeshProUGUI attackBindingText;
-    [SerializeField] private TextMeshProUGUI interactBindingText;
-    [SerializeField] private TextMeshProUGUI crouchBindingText;
-    [SerializeField] private TextMeshProUGUI previousBindingText;
-    [SerializeField] private TextMeshProUGUI nextBindingText;
+    //[SerializeField] private TextMeshProUGUI attackBindingText;
+    //[SerializeField] private TextMeshProUGUI interactBindingText;
+    //[SerializeField] private TextMeshProUGUI crouchBindingText;
+    //[SerializeField] private TextMeshProUGUI previousBindingText;
+    //[SerializeField] private TextMeshProUGUI nextBindingText;
 
     [Header("Welcome Screen UI Elements")]
     [SerializeField] private GameObject welcomePanel;
@@ -63,11 +63,11 @@ public class IntroScreen : MonoBehaviour
         jumpBindingText.text = "Jump - Space";
         glideBindingText.text = "Glide - Hold Space (while in air)";
         sprintBindingText.text = "Sprint - Left Shift";
-        attackBindingText.text = "Attack - Mouse Left Button / Enter";
-        interactBindingText.text = "Interact - E";
-        crouchBindingText.text = "Crouch - C";
-        previousBindingText.text = "Prev. - 1 / D-pad Left";
-        nextBindingText.text = "Next - 2 / D-pad Right";
+        //attackBindingText.text = "Attack - Mouse Left Button / Enter";
+        //interactBindingText.text = "Interact - E";
+        //crouchBindingText.text = "Crouch - C";
+        //previousBindingText.text = "Prev. - 1 / D-pad Left";
+        //nextBindingText.text = "Next - 2 / D-pad Right";
 
         Time.timeScale = 0; // Pause the game
         if (introPanel != null)
