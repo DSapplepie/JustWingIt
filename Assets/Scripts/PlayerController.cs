@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 	public AudioClip glideSound;
 	public AudioClip landSound;
 	public AudioClip sprintSound;
+	private bool isSprintSoundPlaying = false;
+
 	
 	#endregion
 	private void Awake()
@@ -85,11 +87,31 @@ public class PlayerController : MonoBehaviour
 			transform.position = new Vector3(166f, 410f, 146f);
 		}
 		Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.linearVelocity = Vector3.zero; // Reset velocity
-                rb.angularVelocity = Vector3.zero; // Reset angular velocity
-            }
+		if (rb != null)
+		{
+			rb.linearVelocity = Vector3.zero; // Reset velocity
+			rb.angularVelocity = Vector3.zero; // Reset angular velocity
+		}
+		
+		//Sprint sound logic 
+		if (IsGrounded() && movement.isSprinting)
+		{
+			if (!isSprintSoundPlaying)
+			{
+				audioSource.clip = sprintSound;
+				audioSource.loop = true;
+				audioSource.Play();
+				isSprintSoundPlaying = true;
+			}
+		}
+		else
+		{
+			if (isSprintSoundPlaying)
+			{
+				audioSource.Stop();
+				isSprintSoundPlaying = false;
+			}
+    }	
 	}
 
 	private void ApplyGravity()
@@ -203,11 +225,25 @@ public class PlayerController : MonoBehaviour
 		_numberOfJumps++;
 		_velocity = jumpPower;
 		audioSource.PlayOneShot(jumpSound);
+
+		// Stop sprint sound when jumping
+		if (isSprintSoundPlaying)
+		{
+			audioSource.Stop();
+			isSprintSoundPlaying = false;
+		}
 	}
 
 	public void Sprint(InputAction.CallbackContext context)
 	{
 		movement.isSprinting = context.started || context.performed;
+
+		// Stop sprint sound if sprinting is canceled
+		if (!movement.isSprinting && isSprintSoundPlaying)
+		{
+			audioSource.Stop();
+			isSprintSoundPlaying = false;
+    	}	
 	}
 
 	//respawn player at last checkpoint position
