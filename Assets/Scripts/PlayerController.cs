@@ -73,6 +73,10 @@ public class PlayerController : MonoBehaviour
 			Vector3 checkpointPosition = CheckpointManager.Instance.GetLastCheckpointPosition();
 			transform.position = checkpointPosition;
 		}
+		if (Input.GetKeyDown(KeyCode.J))
+		{
+			transform.position = new Vector3(166f, 410f, 146f);
+		}
 		Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {

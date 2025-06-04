@@ -82,8 +82,8 @@ public class IntroScreen : MonoBehaviour
 
     private void Update()
     {
-        // Toggle intro screen with F1 key
-        if (Input.GetKeyDown(KeyCode.F1))
+        // Toggle intro screen with F2 key
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             if (introPanel.activeInHierarchy)
             {
