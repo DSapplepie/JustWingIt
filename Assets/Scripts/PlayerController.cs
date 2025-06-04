@@ -48,7 +48,14 @@ public class PlayerController : MonoBehaviour
 	private bool _isGliding;
 
 	#endregion
+	#region Variables: Audio
+	public AudioSource audioSource;
+	public AudioClip jumpSound;
+	public AudioClip glideSound;
+	public AudioClip landSound;
+	public AudioClip sprintSound;
 	
+	#endregion
 	private void Awake()
 	{
 		_characterController = GetComponent<CharacterController>();
@@ -146,8 +153,29 @@ public class PlayerController : MonoBehaviour
 
 	public void Glide(InputAction.CallbackContext context)
 	{
-    	if (context.started)      _isGliding = true;
-    	else if (context.canceled) _isGliding = false;
+    	if (context.started)
+		{
+			_isGliding = true;
+			Debug.Log("Gliding started");
+
+			if (!audioSource.isPlaying)
+			{
+				audioSource.clip = glideSound;
+				audioSource.Play();
+				Debug.Log("Gliding sound playing");
+			}
+		}
+		else if (context.canceled)
+		{
+			_isGliding = false;
+			Debug.Log("Gliding stopped");
+
+			if (audioSource.isPlaying && audioSource.clip == glideSound)
+			{
+				audioSource.Stop();
+				Debug.Log("Gliding sound stopped");
+			}
+		}
 	}
 
 	public void Move(InputAction.CallbackContext context)
@@ -155,25 +183,26 @@ public class PlayerController : MonoBehaviour
 		_input = context.ReadValue<Vector2>();
 		_direction = new Vector3(_input.x, 0.0f, _input.y);
 	}
-	
+
 	public void Jump(InputAction.CallbackContext context)
 	{
-    	if (!context.started) return;
+		if (!context.started) return;
 		//first jump within coyote time
-    	bool canFirstJump = _numberOfJumps == 0
-                      && (Time.time - _lastGroundedTime <= coyoteTime);
+		bool canFirstJump = _numberOfJumps == 0
+					  && (Time.time - _lastGroundedTime <= coyoteTime);
 
-    	// double jump only if we done at least one jump
-    	bool canDoubleJump = _numberOfJumps > 0
-                      && _numberOfJumps < maxNumberOfJumps;
+		// double jump only if we done at least one jump
+		bool canDoubleJump = _numberOfJumps > 0
+					  && _numberOfJumps < maxNumberOfJumps;
 
-    	// if neither case applies, bail out
-    	if (!canFirstJump && !canDoubleJump) 
-        	return;
+		// if neither case applies, bail out
+		if (!canFirstJump && !canDoubleJump)
+			return;
 
-    	// otherwise do the jump
-    	_numberOfJumps++;
-    	_velocity = jumpPower;
+		// otherwise do the jumpf
+		_numberOfJumps++;
+		_velocity = jumpPower;
+		audioSource.PlayOneShot(jumpSound);
 	}
 
 	public void Sprint(InputAction.CallbackContext context)
