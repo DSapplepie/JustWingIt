@@ -1,4 +1,3 @@
-using UnityEditor.Search;
 using UnityEngine;
 
 public class FinishLine2 : MonoBehaviour
