@@ -87,10 +87,6 @@ public class PlayerController : MonoBehaviour
 		{
 			transform.position = new Vector3(166f, 410f, 146f);
 		}
-		if (Input.GetKeyDown(KeyCode.M))
-		{
-			transform.position = new Vector3(215f, 132f, 163f);
-		}
 		Rigidbody rb = GetComponent<Rigidbody>();
 		if (rb != null)
 		{
