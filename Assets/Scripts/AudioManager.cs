@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip backgroundMusic1;
     public AudioClip background2;
     public AudioClip finishMusic;
+    public AudioClip[] sfxClips; // Array to hold sound effects
+    public AudioClip cluck;
 
     void Awake()
     {
@@ -52,5 +54,10 @@ public class AudioManager : MonoBehaviour
             musicSource1.loop = true;
             musicSource1.Play();
         }
+    }
+
+    public void StartCitySound()
+    {
+        musicSource2.PlayOneShot(background2);
     }
 }

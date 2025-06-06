@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 	#region Variables: Gravity
 
 	// low gravity mode right now - usually -9.81f
+	//private float _gravity = -5f;
 	private float _gravity = -9.81f;
 	[SerializeField] private float gravityMultiplier = 3.0f;
 	private float _velocity;
@@ -55,6 +56,9 @@ public class PlayerController : MonoBehaviour
 	public AudioClip glideSound;
 	public AudioClip landSound;
 	public AudioClip sprintSound;
+	public AudioClip cluck;
+	public AudioClip walkSound;
+	private bool isWalkSoundPlaying = false;
 	private bool isSprintSoundPlaying = false;
 
 	
@@ -66,6 +70,8 @@ public class PlayerController : MonoBehaviour
 		_lastGroundedTime = Time.time;
 	}
 
+	private bool wasGroundedLastFrame = true; // Add this as a private field at the top of the class
+
 	private void Update()
 	{
 
@@ -73,11 +79,24 @@ public class PlayerController : MonoBehaviour
 		ApplyGravity();
 		ApplyMovement();
 
-		if (IsGrounded())
+		bool isGroundedNow = IsGrounded();
+		// Landing sound logic
+		if (!wasGroundedLastFrame && isGroundedNow)
+		{
+			if (!jumpSoundSource.isPlaying)
+			{
+				jumpSoundSource.PlayOneShot(landSound);
+				Debug.Log("Landed");
+			}
+		}
+
+		if (isGroundedNow)
 		{
 			_lastGroundedTime = Time.time;  // reset our coyote clock
 			_numberOfJumps = 0;          // normal jump‐reset
 		}
+
+		wasGroundedLastFrame = isGroundedNow; // Update at the end of Update()
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			Vector3 checkpointPosition = CheckpointManager.Instance.GetLastCheckpointPosition();
@@ -93,7 +112,7 @@ public class PlayerController : MonoBehaviour
 			rb.linearVelocity = Vector3.zero; // Reset velocity
 			rb.angularVelocity = Vector3.zero; // Reset angular velocity
 		}
-		
+
 		//Sprint sound logic 
 		if (IsGrounded() && movement.isSprinting)
 		{
@@ -112,7 +131,28 @@ public class PlayerController : MonoBehaviour
 				audioSource.Stop();
 				isSprintSoundPlaying = false;
 			}
-    }	
+		}
+
+		// Walking sound logic
+		bool isWalking = IsGrounded() && !movement.isSprinting && !_isGliding && _input.sqrMagnitude > 0.1f;
+		if (isWalking)
+		{
+			if (!isWalkSoundPlaying)
+			{
+				audioSource.clip = walkSound;
+				audioSource.loop = true;
+				audioSource.Play();
+				isWalkSoundPlaying = true;
+			}
+		}
+		else
+		{
+			if (isWalkSoundPlaying)
+			{
+				audioSource.Stop();
+				isWalkSoundPlaying = false;
+			}
+		}	
 	}
 
 	private void ApplyGravity()
@@ -218,10 +258,19 @@ public class PlayerController : MonoBehaviour
 		if (!canFirstJump && !canDoubleJump)
 			return;
 
-		// otherwise do the jumpf
+		// otherwise do the jump
 		_numberOfJumps++;
 		_velocity = jumpPower;
+
+		// Play jump sound
 		jumpSoundSource.PlayOneShot(jumpSound);
+
+		// Play cluck sound if this is a double jump, using AudioManager
+		if (canDoubleJump && UnityEngine.Random.value < 0.5f)
+		{
+			jumpSoundSource.PlayOneShot(cluck);
+		}
+
 		// Stop sprint sound when jumping
 		if (isSprintSoundPlaying)
 		{
