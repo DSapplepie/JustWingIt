@@ -10,7 +10,6 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip backgroundMusic1;
     public AudioClip background2;
-    public AudioClip finishMusic;
     public AudioClip[] sfxClips; // Array to hold sound effects
     public AudioClip cluck;
 

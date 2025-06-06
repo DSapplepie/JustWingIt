@@ -38365,7 +38365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Toggle Controls / Start - F1
+  m_text: Toggle Controls / Start - F2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -39801,7 +39801,6 @@ MonoBehaviour:
   sfxSource: {fileID: 1025621645}
   backgroundMusic1: {fileID: 8300000, guid: d08ebcf05a5e3d737a292577fc84fb87, type: 3}
   background2: {fileID: 8300000, guid: 8e893be13711b4ac49d2543e4958236d, type: 3}
-  finishMusic: {fileID: 0}
   sfxClips:
   - {fileID: 8300000, guid: 0075752d2e92044c994dc44773db363c, type: 3}
   cluck: {fileID: 8300000, guid: 0075752d2e92044c994dc44773db363c, type: 3}
